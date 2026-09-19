@@ -37,7 +37,7 @@ services:
       LETSENCRYPT_HOST: api.ralejandro.com
       LETSENCRYPT_EMAIL: ralejandrobm@gmail.com
     ports:
-      - '8000:8000'
+      - '8001:8000'
     restart: "always"
     networks:
       - web
