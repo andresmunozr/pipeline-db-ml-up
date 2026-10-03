@@ -1,7 +1,6 @@
 import os
 import joblib
-import numpy as np
-import os
+import pandas as pd
 
 from src.contexts.api.models import PredictorRequest
 
@@ -10,21 +9,16 @@ from src.contexts.api.models import PredictorRequest
 class TrainModelController:
     def execute(self, request: PredictorRequest):
         print(request)
-        sex=request.sex.value
-        nuevo=request.nuevo
-       
-        lr_model_path = os.getenv("MODELO_ENTRENADO")
-       
-        # Cargar el modelo desde el archivo
-        modelo_cargado = joblib.load(lr_model_path)
+        model_path = os.getenv("MODELO_ENTRENADO")
+        model = joblib.load(model_path)
+        input_data = pd.DataFrame([{
+            "email_type": request.email_type,
+            "country": request.country,
+            "city": request.city,
+        }])
+        prediction = model.predict(input_data)[0]
 
-        # Crear un nuevo dato para predecir
-        nuevo_dato = np.array([[nuevo]])  # X = 6
-
-        # Hacer la predicción
-        result = modelo_cargado.predict(nuevo_dato)
-        print(f"Predicción para X=6: {result[0][0]}")
-        
-        return {"status": "OK", "result": result[0][0]}
+        print(f"Predicción de género musical: {prediction}")
+        return {"status": "OK", "result": prediction}
 
     
