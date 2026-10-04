@@ -31,13 +31,13 @@ services:
     env_file:
       - ./.env
     environment:
-      PORT: 4000
+      PORT: 8000
       VIRTUAL_HOST: api.ralejandro.com
-      VIRTUAL_PORT: 4000
+      VIRTUAL_PORT: 8000
       LETSENCRYPT_HOST: api.ralejandro.com
       LETSENCRYPT_EMAIL: ralejandrobm@gmail.com
     ports:
-      - '4000:4000'
+      - '8000:8000'
     restart: "always"
     networks:
       - web
